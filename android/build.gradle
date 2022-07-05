@@ -37,6 +37,9 @@ android {
         implementation 'com.segment.analytics.android:analytics:4.10.4'
         implementation 'com.segment.analytics.android.integrations:amplitude:3.1.0'
         implementation 'com.appsflyer:segment-android-integration:6.5.2'
+        implementation 'com.segment.analytics.android.integrations:firebase:2.3.3@aar'
+        implementation 'com.segment.analytics.android.integrations:mixpanel:3.2.2@aar'
+        implementation 'com.mixpanel.android:mixpanel-android:5.8.6'
     }
 }
 

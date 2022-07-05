@@ -4,6 +4,9 @@
 #import <Segment/SEGContext.h>
 #import <Segment/SEGMiddleware.h>
 #import <Segment_Amplitude/SEGAmplitudeIntegrationFactory.h>
+#import <Segment_Mixpanel/SEGMixpanelIntegrationFactory.h>
+#import <Segment_Firebase/SEGFirebaseIntegrationFactory.h>
+
 
 @implementation FlutterSegmentPlugin
 // Contents to be appended to the context
@@ -350,6 +353,8 @@ static BOOL wasSetupFromFile = NO;
     NSString *writeKey = [dict objectForKey: @"com.claimsforce.segment.WRITE_KEY"];
     BOOL trackApplicationLifecycleEvents = [[dict objectForKey: @"com.claimsforce.segment.TRACK_APPLICATION_LIFECYCLE_EVENTS"] boolValue];
     BOOL isAmplitudeIntegrationEnabled = [[dict objectForKey: @"com.claimsforce.segment.ENABLE_AMPLITUDE_INTEGRATION"] boolValue];
+    BOOL isMixpanelIntegrationEnabled = [[dict objectForKey: @"com.claimsforce.segment.ENABLE_MIXPANEL_INTEGRATION"] boolValue];
+    BOOL isFirebaseIntegrationEnabled = [[dict objectForKey: @"com.claimsforce.segment.ENABLE_FIREBASE_INTEGRATION"] boolValue];
     if(!writeKey) {
         return nil;
     }
@@ -360,6 +365,14 @@ static BOOL wasSetupFromFile = NO;
       [configuration use:[SEGAmplitudeIntegrationFactory instance]];
     }
 
+    if (isMixpanelIntegrationEnabled) {
+        [configuration use:[SEGMixpanelIntegrationFactory instance]];
+    }
+    
+    if (isFirebaseIntegrationEnabled) {
+        [configuration use:[SEGFirebaseIntegrationFactory instance]];
+    }
+
     return configuration;
 }
 
@@ -368,6 +381,8 @@ static BOOL wasSetupFromFile = NO;
     BOOL trackApplicationLifecycleEvents = [[dict objectForKey: @"trackApplicationLifecycleEvents"] boolValue];
     BOOL isAmplitudeIntegrationEnabled = [[dict objectForKey: @"amplitudeIntegrationEnabled"] boolValue];
     BOOL isAppsflyerIntegrationEnabled = [[dict objectForKey: @"appsflyerIntegrationEnabled"] boolValue];
+    BOOL isMixpanelIntegrationEnabled = [[dict objectForKey: @"mixpanelIntegrationEnabled"] boolValue];
+    BOOL isFirebaseIntegrationEnabled = [[dict objectForKey: @"firebaseIntegrationEnabled"] boolValue];
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:writeKey];
     configuration.trackApplicationLifecycleEvents = trackApplicationLifecycleEvents;
 
@@ -377,6 +392,14 @@ static BOOL wasSetupFromFile = NO;
 
     if (isAppsflyerIntegrationEnabled) {
       [configuration use:[SEGAppsFlyerIntegrationFactory instance]];
+    }
+
+    if (isMixpanelIntegrationEnabled) {
+      [configuration use:[SEGMixpanelIntegrationFactory instance]];
+    }
+    
+    if (isFirebaseIntegrationEnabled) {
+      [configuration use:[SEGFirebaseIntegrationFactory instance]];
     }
 
     return configuration;
